@@ -1,0 +1,16 @@
+{
+  "name": "blog-demo",
+  "version": "1.0.0",
+  "main": "www.js",
+  "license": "MIT",
+  "scripts": {
+    "dev": "cross-env NODE_ENV=dev nodemon ./www.js",
+    "prd": "cross-env NODE_ENV=production nodemon ./www.js"
+  },
+  "author": "jack",
+  "dependencies": {
+    "cross-env": "^5.2.0",
+    "mysql": "^2.17.1",
+    "nodemon": "^1.19.1"
+  }
+}
