@@ -45,36 +45,36 @@ const serverHandle = (req, res) => {
   req.path = url.split("?")[0];
 
   //如果get解析query
-  req.query = querystring.parse(url.split("?")[0]);
+  req.query = querystring.parse(url.split("?")[1]);
+
+  //解析cookie
+  const cookiestr = req.headers.cookie || ""; //k1=v1,k2=v2
+  cookiestr.split(";").map(item => {
+    if (!item) return;
+    const arr = item.split("=");
+    const key = arr[0];
+    const val = arr[1];
+    req.cookie[key] = val;
+  });
+
+  console.log("cookie", req.cookie);
 
   //异步处理
   getPostData(req).then(postData => {
     req.body = postData;
-    console.log('req.body',req.body);
     const blogDataPromise = handleBlogRouter(req, res);
-    console.log('blogDataPromise',blogDataPromise);
-  
+
     if (blogDataPromise) {
       blogDataPromise.then(blogData => {
-        console.log('blogData',blogData);
         res.end(JSON.stringify(blogData));
       });
       return;
     }
-     //处理404
+    //处理404
     res.writeHead(404, { "Content-type": "text/plain" });
     res.write("404 Not Found\n");
     res.end();
-
-
-
-
-
-
   });
-
-
-    
 };
 
 module.exports = serverHandle;
