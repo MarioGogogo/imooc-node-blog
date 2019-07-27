@@ -14,7 +14,7 @@ const getPostData = req => {
       return;
     }
 
-    if (req.headers["Content-type"] !== "application/json") {
+    if (req.headers["content-type"] !== "application/json") {
       resolve({});
       return;
     }
@@ -25,7 +25,7 @@ const getPostData = req => {
       postData += chunk.toString();
     });
     req.on("end", () => {
-      console.log(postData);
+      
       if (!postData) {
         resolve({});
       }
@@ -62,6 +62,8 @@ const serverHandle = (req, res) => {
   //异步处理
   getPostData(req).then(postData => {
     req.body = postData;
+    console.log('postData',postData);
+
     const blogDataPromise = handleBlogRouter(req, res);
 
     if (blogDataPromise) {

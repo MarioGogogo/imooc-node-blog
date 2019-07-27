@@ -30,14 +30,53 @@ const getDetail = id => {
   //   }
 };
 
-const createNewBlog = (data = {}) => {
-  return {
-    msg: "创建成功"
-  };
+//创建博客
+const createNewBlog = (data={}) => {
+ 
+  const title = data.title
+  const content = data.content
+  const author = data.author
+  const createtime = Date.now()
+
+  const sql = `insert into blogs (title,content,createtime,author) values ('${title}','${content}','${createtime}','${author}');`
+  
+  //返回promise
+  return exec(sql)
+
 };
+
+//更新博客
+const updateBlog = (data) => {
+  const id = data.id
+  const title = data.blogData.title
+  const content = data.blogData.content
+  const author = data.blogData.author
+  const createtime = Date.now()
+
+  const sql = `update blogs set title = '${title}',content ='${content}', createtime ='${createtime}', author ='${author}' where id='${id}';`
+  
+  //返回promise
+  return exec(sql)
+
+};
+
+//删除博客
+const delBlog = (data) => {
+  const id = data.id
+  const author = data.author
+
+  const sql = `delete from blogs  where id='${id}' and author='${author}';`
+  
+  //返回promise
+  return exec(sql)
+
+};
+
 
 module.exports = {
   getList,
   getDetail,
-  createNewBlog
+  createNewBlog,
+  updateBlog,
+  delBlog
 };

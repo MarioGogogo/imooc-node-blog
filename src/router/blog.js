@@ -1,4 +1,4 @@
-const { getList, getDetail, createNewBlog } = require("../controller/blog");
+const { getList, getDetail, createNewBlog,updateBlog,delBlog } = require("../controller/blog");
 const { SuccessModal, ErrorModal } = require("../modal/resModal");
 
 const handleBlogRouter = (req, res) => {
@@ -34,14 +34,39 @@ const handleBlogRouter = (req, res) => {
 
   //新建一篇博客
   if (method === "POST" && req.path === "/api/blog/new") {
-    const createResult = createNewBlog(req.body);
-    return new SuccessModal(createResult);
+
+    const result = createNewBlog(req.body);
+    
+    const promise = result.then(createResult => {
+      console.log('createResult',createResult);
+   
+      return new SuccessModal({id:createResult.insertId});
+    });
+
+    return promise
+
+
   }
   //更新一篇博客
   if (method === "POST" && req.path === "/api/blog/update") {
-    return {
-      msg: "更新博客api"
-    };
+    const result = updateBlog(req.body);
+    
+    const promise = result.then(updateResult => {
+      console.log('updateResult',updateResult);
+      return new SuccessModal(updateResult.changedRows === 1 ? "更新成功" :"更新失败");
+    });
+    return promise
+  }
+
+   //删除一篇博客
+   if (method === "POST" && req.path === "/api/blog/delete") {
+    const result = delBlog(req.body);
+    
+    const promise = result.then(deleteResult => {
+      console.log('deleteResult',deleteResult);
+      return new SuccessModal(deleteResult.affectedRows > 0 ? "删除成功" :"删除失败");
+    });
+    return promise
   }
 };
 
