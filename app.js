@@ -1,6 +1,6 @@
 const querystring = require("querystring");
 const handleBlogRouter = require("./src/router/blog");
-// const handleUserRouter = require('./src/router/user')
+const handleUserRouter = require('./src/router/user')
 
 /**
  * 处理异步请求 post Data
@@ -69,6 +69,15 @@ const serverHandle = (req, res) => {
     if (blogDataPromise) {
       blogDataPromise.then(blogData => {
         res.end(JSON.stringify(blogData));
+      });
+      return;
+    }
+
+    const userDataPromise = handleUserRouter(req, res);
+
+    if (userDataPromise) {
+      userDataPromise.then(userData => {
+        res.end(JSON.stringify(userData));
       });
       return;
     }
