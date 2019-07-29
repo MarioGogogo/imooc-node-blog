@@ -2,6 +2,9 @@ const querystring = require("querystring");
 const handleBlogRouter = require("./src/router/blog");
 const handleUserRouter = require('./src/router/user')
 
+const SESSION_DATA= {}
+
+
 /**
  * 处理异步请求 post Data
  * @param {参数} req
@@ -56,8 +59,22 @@ const serverHandle = (req, res) => {
     const val = arr[1];
     req.cookie[key] = val;
   });
-
   console.log("cookie", req.cookie);
+
+
+  //解析session
+  const userId = req.cookie.userId
+  if(userId){
+    if(!SESSION_DATA[userId]){
+      SESSION_DATA[userId] = {}
+    }
+  }else{
+    userId = `${Date.now()}_${Math.random()}`
+    SESSION_DATA[userId] = {}
+  }
+  req.session = SESSION_DATA[userId]
+
+ 
 
   //异步处理
   getPostData(req).then(postData => {
@@ -68,6 +85,8 @@ const serverHandle = (req, res) => {
 
     if (blogDataPromise) {
       blogDataPromise.then(blogData => {
+        //设置session
+        res.setHeader('set-Cookie','cookie-123')
         res.end(JSON.stringify(blogData));
       });
       return;
@@ -77,6 +96,8 @@ const serverHandle = (req, res) => {
 
     if (userDataPromise) {
       userDataPromise.then(userData => {
+        //设置session
+        res.setHeader('set-Cookie','cookie-123')
         res.end(JSON.stringify(userData));
       });
       return;
