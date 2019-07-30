@@ -2,6 +2,12 @@ const querystring = require("querystring");
 const handleBlogRouter = require("./src/router/blog");
 const handleUserRouter = require('./src/router/user')
 
+// 日志方法
+const {access }  = require('./src/log/index')
+
+
+
+
 const SESSION_DATA= {}
 
 
@@ -41,6 +47,8 @@ const getPostData = req => {
 };
 
 const serverHandle = (req, res) => {
+  //日志输出
+  access(`请求方法：${req.method}--请求路径:${req.url}--请求头：${req.headers['user-agent']}--${Date.now()} `)
   //设置返回格式
   res.setHeader("Content-type", "application/json");
 
@@ -51,28 +59,28 @@ const serverHandle = (req, res) => {
   req.query = querystring.parse(url.split("?")[1]);
 
   //解析cookie
-  const cookiestr = req.headers.cookie || ""; //k1=v1,k2=v2
-  cookiestr.split(";").map(item => {
-    if (!item) return;
-    const arr = item.split("=");
-    const key = arr[0];
-    const val = arr[1];
-    req.cookie[key] = val;
-  });
-  console.log("cookie", req.cookie);
+  // const cookiestr = req.headers.cookie || ""; //k1=v1,k2=v2
+  // cookiestr.split(";").map(item => {
+  //   if (!item) return;
+  //   const arr = item.split("=");
+  //   const key = arr[0];
+  //   const val = arr[1];
+  //   req.cookie[key] = val;
+  // });
+  // console.log("cookie", req.cookie);
 
 
   //解析session
-  const userId = req.cookie.userId
-  if(userId){
-    if(!SESSION_DATA[userId]){
-      SESSION_DATA[userId] = {}
-    }
-  }else{
-    userId = `${Date.now()}_${Math.random()}`
-    SESSION_DATA[userId] = {}
-  }
-  req.session = SESSION_DATA[userId]
+  // const userId = req.cookie.userId
+  // if(userId){
+  //   if(!SESSION_DATA[userId]){
+  //     SESSION_DATA[userId] = {}
+  //   }
+  // }else{
+  //   userId = `${Date.now()}_${Math.random()}`
+  //   SESSION_DATA[userId] = {}
+  // }
+  // req.session = SESSION_DATA[userId]
 
  
 

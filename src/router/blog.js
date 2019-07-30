@@ -5,19 +5,13 @@ const { SuccessModal, ErrorModal } = require("../modal/resModal");
  * 统一一个登录验证的函数
  */
 const loginCheck = (req)=>{
-    if(!req.session.username){
+    if(req.session && !req.session.username){
       return Promise.resolve(
         new ErrorModal('尚未登录')
       )
     }
    
 }
-
-
-
-
-
-
 
 
 const handleBlogRouter = (req, res) => {
@@ -54,10 +48,11 @@ const handleBlogRouter = (req, res) => {
   //新建一篇博客
   if (method === "POST" && req.path === "/api/blog/new") {
     const logloginCheckPromise = loginCheck(req)
-    if(logloginCheckPromise){
-      //返回登录界面
-       return logloginCheckPromise
-    }
+    console.log(logloginCheckPromise);
+    // if(logloginCheckPromise){
+    //   //返回登录界面
+    //    return logloginCheckPromise
+    // }
     //判断是否登录
     const result = createNewBlog(req.body);
     

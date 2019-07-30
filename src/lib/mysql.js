@@ -19,7 +19,7 @@ const exec = (sql) => {
 					if (err) {
 						reject(err);
 					} else {
-						console.log('数据',rows);
+						console.log('数据库返回',rows);
 						resolve(rows);
 					}
 					// db.release();
