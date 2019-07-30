@@ -1,6 +1,25 @@
 const { getList, getDetail, createNewBlog,updateBlog,delBlog } = require("../controller/blog");
 const { SuccessModal, ErrorModal } = require("../modal/resModal");
 
+/**
+ * 统一一个登录验证的函数
+ */
+const loginCheck = (req)=>{
+    if(!req.session.username){
+      return Promise.resolve(
+        new ErrorModal('尚未登录')
+      )
+    }
+   
+}
+
+
+
+
+
+
+
+
 const handleBlogRouter = (req, res) => {
   const method = req.method;
   //获取博客列表
@@ -34,7 +53,12 @@ const handleBlogRouter = (req, res) => {
 
   //新建一篇博客
   if (method === "POST" && req.path === "/api/blog/new") {
-
+    const logloginCheckPromise = loginCheck(req)
+    if(logloginCheckPromise){
+      //返回登录界面
+       return logloginCheckPromise
+    }
+    //判断是否登录
     const result = createNewBlog(req.body);
     
     const promise = result.then(createResult => {
@@ -49,6 +73,11 @@ const handleBlogRouter = (req, res) => {
   }
   //更新一篇博客
   if (method === "POST" && req.path === "/api/blog/update") {
+    const logloginCheckPromise = loginCheck(req)
+    if(logloginCheckPromise){
+      //返回登录界面
+       return loginCheck
+    }
     const result = updateBlog(req.body);
     
     const promise = result.then(updateResult => {
@@ -60,6 +89,12 @@ const handleBlogRouter = (req, res) => {
 
    //删除一篇博客
    if (method === "POST" && req.path === "/api/blog/delete") {
+    const logloginCheckPromise = loginCheck(req)
+    if(logloginCheckPromise){
+      //返回登录界面
+       return logloginCheckPromise
+    }
+
     const result = delBlog(req.body);
     
     const promise = result.then(deleteResult => {

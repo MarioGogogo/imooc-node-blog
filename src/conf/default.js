@@ -1,6 +1,9 @@
 const env = process.env.NODE_ENV   //环境变量
 let config={}
-//开发环境
+let redis_config={}
+
+
+//开发环境  本地
 if(env === "dev"){
 	 config = {
 		// 启动端口
@@ -13,7 +16,11 @@ if(env === "dev"){
 			PORT: '3306',
 			HOST: 'localhost',
 		},
-	};
+	}
+	redis_config={
+		HOST: '127.0.0.1',
+		PORT: '6379',
+	}
 }
 
 //线上环境
@@ -29,7 +36,11 @@ if(env === "production"){
 			PORT: '3306',
 			HOST: 'localhost',
 		},
-	};
+	}
+	redis_config={
+		HOST: 'localhost',
+		PORT: '6379',
+	}
 
 }
 
@@ -37,4 +48,4 @@ if(env === "production"){
 
 
 
-module.exports = config;
+module.exports = {config,redis_config};
