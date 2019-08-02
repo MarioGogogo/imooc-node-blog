@@ -18,6 +18,10 @@ const getDetail = async (id) => {
     const sql = `select * from blogs where id='${id}'`
     const rows = await exec(sql)
     return rows[0]
+    // 效果与下面写法一致
+    // return await exec(sql).then(rows=>{
+    //     return rows[0]
+    // })
 }
 
 const newBlog = async (blogData = {}) => {
