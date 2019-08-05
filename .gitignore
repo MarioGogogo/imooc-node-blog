@@ -2,6 +2,8 @@
 
 # dependencies
 /node_modules
+/blog-koa2/node_modules
+/koa2_mysql_blog/node_modules
 /.pnp
 .pnp.js
 

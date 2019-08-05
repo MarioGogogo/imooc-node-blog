@@ -1,10 +1,12 @@
 const env = process.env.NODE_ENV  // 环境参数
+console.log('env',env);
 
 // 配置
 let MYSQL_CONF
 let REDIS_CONF
 
-if (env === 'dev') {
+//如果是env是开发环境 或者 env是undefined也是开发环境
+if (env === 'dev' || !env) {
     // mysql
     MYSQL_CONF = {
         host: 'localhost',
