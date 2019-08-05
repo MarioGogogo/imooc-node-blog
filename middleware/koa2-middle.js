@@ -45,6 +45,7 @@ class LikeKoa2 {
 
     return (req, res) => {
       const ctx = this.createContent(req,res)
+      // 返回promise
       return this.handleRequset(ctx,fn)
     };
   }

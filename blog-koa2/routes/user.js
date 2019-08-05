@@ -10,8 +10,6 @@ router.post('/login', async function (ctx, next) {
     if (data.username) {
         // 设置 session
         ctx.session.username = data.username
-        ctx.session.realname = data.realname
-
         ctx.body = new SuccessModel()
         return
     }
