@@ -16,6 +16,10 @@
 
 ### 🏠 [Homepage](https://github.com/MarioGogogo/imooc-node-blog#readme)
 
+## DEMO preview
+[预览地址](http://120.27.220.173:8090/)
+
+
 ## Prerequisites
 
 - npm >=5.5.0
