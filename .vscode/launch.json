@@ -8,7 +8,7 @@
       "type": "node",
       "request": "launch",
       "name": "Launch Program",
-      "program": "${workspaceFolder}/www.js"
+      "program": "${workspaceFolder}/koa2_mysql_blog/app.js"
     }
   ]
 }

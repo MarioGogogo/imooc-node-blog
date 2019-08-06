@@ -68,6 +68,18 @@
         const $title = $('#title')
         const $infoContainer = $('#info-container')
         const $content = $('#content')
+         
+        function formatHTML(str){
+            if(typeof str === "string"){
+               str =  str.replace(/&lt;/g,'<')
+                str =str.replace(/&gt;/g,'>')
+                return str
+            }else{
+                return new Error('不是字符串')
+            }
+        }
+
+
 
         // 获取数据
         const urlParams = getUrlParams()
@@ -78,9 +90,11 @@
                 return
             }
 
+           
+
             // 显示数据
             const data = res.data || {}
-            $title.text(data.title)
+            $title.text(formatHTML(data.title))
             $content.text(data.content)
             $infoContainer.append($(`
                 <span>

@@ -6,6 +6,7 @@ const SECRET_KEY = 'WJiol_8776#'
 // md5 加密
 function md5(content) {
     let md5 = crypto.createHash('md5')
+    //输出变成16进制方式
     return md5.update(content).digest('hex')
 }
 
